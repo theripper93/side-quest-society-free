@@ -15,8 +15,8 @@ export class SQSBrowser extends HandlebarsApplication {
                 resizable: true,
             },
             position: {
-                width: window.innerWidth * 0.7,
-                height: window.innerHeight * 0.7,
+                width: window.innerWidth * 0.6,
+                height: window.innerHeight * 0.8,
             },
         });
     }
@@ -26,7 +26,7 @@ export class SQSBrowser extends HandlebarsApplication {
             content: {
                 template: `modules/${MODULE_ID}/templates/${this.APP_ID}.hbs`,
                 classes: ["standard-form"],
-                scrollable: [],
+                scrollable: [".scrollable"],
             },
         };
     }
@@ -46,6 +46,33 @@ export class SQSBrowser extends HandlebarsApplication {
     _onRender(context, options) {
         super._onRender(context, options);
         const html = this.element;
+        html.querySelectorAll("button").forEach(button => {
+            button.addEventListener("click", this.#onButtonClick.bind(this));
+        });
+    }
+
+    async #onButtonClick(event) {
+        const uuid = event.currentTarget.closest("li").dataset.uuid;
+        const document = await fromUuid(uuid);
+        if (event.currentTarget.id === "import") return document.sheet.render(true);
+        if (event.currentTarget.id === "vote-one") return this.#vote(document, "one");
+        if (event.currentTarget.id === "vote-two") return this.#vote(document, "two");
+    }
+
+    #vote(document, vote) {
+        const questId = document.name.slugify({strict: true});
+        const currentVote = getSetting("votes")[questId];
+        if(currentVote === vote) return;
+        const newVote = !currentVote;
+        const requestData = {
+            questId,
+            vote,
+            switch: !newVote,
+        };
+
+        console.log("Sending vote request", requestData);
+
+        this.render();
     }
 
     _onClose(options) {

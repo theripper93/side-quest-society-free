@@ -1,7 +1,7 @@
 <div>
     <ul class="scrollable">
         {{#each quests as |quest|}}
-        <li class="flexrow">
+        <li class="flexrow" data-uuid="{{quest.uuid}}">
             <img src="{{quest.thumbnail}}" alt="">
             <div class="flexcol">
                 <div style="display: flex; flex-direction: row; align-content: center; justify-content: space-between; gap: 0.3rem;">

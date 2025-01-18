@@ -14,6 +14,12 @@ export function registerSettings() {
             type: Boolean,
             requiresReload: true,
         },
+        votes: {
+            scope: "world",
+            config: false,
+            default: {},
+            type: Object,
+        },
     };
 
     registerSettingsArray(settings);
