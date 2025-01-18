@@ -54,17 +54,35 @@
   "styles": [
     "styles/module.css"
   ],
-  "packs": [],
+  "packs": [
+    {
+      "name": "sqs-free-adventures",
+      "label": "The Side Quest Society Free",
+      "path": "packs/sqs-free-adventures.db",
+      "type": "Adventure",
+      "private": true,
+      "system": "dnd5e"
+    }
+  ],
+  "packFolders": [
+    {
+      "name": "The Side Quest Society",
+      "sorting": "a",
+      "color": "#ff0059",
+      "ownership": {
+        "PLAYER": "NONE"
+      },
+      "packs": [
+        "sqs-free-adventures",
+        "sqs-premium-adventures"
+      ]
+    }
+  ],
   "url": "https://github.com/theripper93/side-quest-society-free",
   "manifest": "https://github.com/theripper93/side-quest-society-free/releases/latest/download/module.json",
   "download": "",
   "relationships": {
     "requires": [
-      {
-        "id": "lib-wrapper",
-        "type": "module",
-        "compatibility": {}
-      }
     ]
   },
   "compatibility": {
