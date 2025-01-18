@@ -1,7 +1,13 @@
 {
     "side-quest-society-free": {
         "settings": {},
-        "app": {},
+        "s-q-s-browser": {
+            "title": "Side Quest Society - Quest Browser",
+            "level": "Level",
+            "voteOne": "Vote One",
+            "voteTwo": "Vote Two",
+            "import": "Import"
+        },
         "flags": {}
     }
 }

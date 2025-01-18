@@ -1,0 +1,31 @@
+.s-q-s-browser .window-content, .s-q-s-browser .standard-form {
+  height: 100%;
+}
+.s-q-s-browser .flexrow,
+.s-q-s-browser .flexcol {
+  gap: 0.3rem;
+  padding: 0.3rem;
+}
+.s-q-s-browser button {
+  width: max-content;
+}
+.s-q-s-browser button#vote-one {
+  border-color: var(--dnd5e-color-blue);
+}
+.s-q-s-browser button#vote-two {
+  border-color: var(--dnd5e-color-red);
+}
+.s-q-s-browser img {
+  height: 200px;
+  max-height: 200px;
+  width: 400px;
+  max-width: 400px;
+}
+.s-q-s-browser .quest-votes {
+  --vote-one-percentage: 0%;
+  --vote-two-percentage: calc(100% - var(--vote-one-percentage));
+  height: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 4px 1px;
+  background: linear-gradient(to right, var(--dnd5e-color-blue) var(--vote-one-percentage), var(--dnd5e-color-red) var(--vote-one-percentage));
+}/*# sourceMappingURL=module.css.map */

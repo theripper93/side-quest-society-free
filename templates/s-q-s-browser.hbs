@@ -1,0 +1,29 @@
+<div>
+    <ul class="scrollable">
+        {{#each quests as |quest|}}
+        <li class="flexrow">
+            <img src="{{quest.thumbnail}}" alt="">
+            <div class="flexcol">
+                <div style="display: flex; flex-direction: row; align-content: center; justify-content: space-between; gap: 0.3rem;">
+                    <h1 class="quest-name">{{quest.name}}</h1>
+                    <button id="import"><i class="fa-solid fa-download"></i> {{localize "side-quest-society-free.s-q-s-browser.import"}}</button>
+                </div>
+                <div class="hint">{{{quest.description}}}</div>
+                <div class="flexrow">
+                    <span>{{localize "side-quest-society-free.s-q-s-browser.level"}}
+                        {{quest.flags.side-quest-society-free.metadata.level.min}} -
+                        {{quest.flags.side-quest-society-free.metadata.level.max}}</span>
+
+                    <div class="quest-votes" style="--vote-one-percentage: {{quest.votes1}}%"></div>
+                    <div class="flexrow">
+                        <button id="vote-one"><i class="fa-solid fa-check-to-slot"></i> {{localize "side-quest-society-free.s-q-s-browser.voteOne"}}</button>
+                        <button id="vote-two"><i class="fa-solid fa-check-to-slot"></i> {{localize "side-quest-society-free.s-q-s-browser.voteTwo"}}</button>
+                    </div>
+                </div>
+
+            </div>
+        </li>
+        <hr>
+        {{/each}}
+    </ul>
+</div>
