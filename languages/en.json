@@ -6,7 +6,8 @@
             "level": "Level",
             "voteOne": "Vote One",
             "voteTwo": "Vote Two",
-            "import": "Import"
+            "import": "Import",
+            "closed": "Voting Closed"
         },
         "flags": {}
     }

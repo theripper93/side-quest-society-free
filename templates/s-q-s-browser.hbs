@@ -15,9 +15,12 @@
                         {{quest.flags.side-quest-society-free.metadata.level.max}}</span>
 
                     <div class="quest-votes" style="--vote-one-percentage: {{quest.votes1prc}}%" data-tooltip="{{quest.votes1}} / {{quest.votes2}}"></div>
-                    <div class="flexrow">
-                        <button {{#unless quest.canVote}}disabled{{/unless}} {{#if quest.voted1}}disabled{{/if}} id="vote-one"><i class="fa-solid fa-check-to-slot"></i> {{localize "side-quest-society-free.s-q-s-browser.voteOne"}}</button>
-                        <button {{#unless quest.canVote}}disabled{{/unless}} {{#if quest.voted2}}disabled{{/if}} id="vote-two"><i class="fa-solid fa-check-to-slot"></i> {{localize "side-quest-society-free.s-q-s-browser.voteTwo"}}</button>
+                    {{#unless quest.canVote}}
+                    <span style="font-size: x-large;text-align: center;">{{localize "side-quest-society-free.s-q-s-browser.closed"}}</span>
+                    {{/unless}}
+                    <div class="flexrow {{#unless quest.canVote}}hidden{{/unless}}">
+                        <button  {{#if quest.voted1}}disabled{{/if}} id="vote-one"><i class="fa-solid fa-check-to-slot"></i> {{localize "side-quest-society-free.s-q-s-browser.voteOne"}}</button>
+                        <button {{#if quest.voted2}}disabled{{/if}} id="vote-two"><i class="fa-solid fa-check-to-slot"></i> {{localize "side-quest-society-free.s-q-s-browser.voteTwo"}}</button>
                     </div>
                 </div>
 
