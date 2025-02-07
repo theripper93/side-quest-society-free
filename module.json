@@ -83,6 +83,12 @@
   "download": "",
   "relationships": {
     "requires": [
+    ],
+    "recommends": [
+      {
+        "id": "side-quest-society-premium",
+        "type": "module"
+      }
     ]
   },
   "compatibility": {
