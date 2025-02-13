@@ -1,4 +1,5 @@
 import {SQSBrowser} from "./app/SQSBrowser.js";
+import {CallingCard} from "./callingCard.js";
 import {initConfig} from "./config.js";
 import { registerSettings } from "./settings.js";
 
@@ -11,5 +12,7 @@ Hooks.on("init", () => {
 });
 
 Hooks.on("ready", () => {
-    new SQSBrowser().render(true);
+    //new SQSBrowser().render(true);
+    //new CallingCard("A hidden path awaits those who seek adventure beyond fate. Aid is needed where kings cannot tread. If you dare, meet at The Gilded Lantern by midnight.")
+    window.CallingCard = CallingCard;
 });

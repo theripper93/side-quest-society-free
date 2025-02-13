@@ -28,4 +28,47 @@
   border-radius: 5px;
   box-shadow: 0 0 4px 1px;
   background: linear-gradient(to right, var(--dnd5e-color-blue) var(--vote-one-percentage), var(--dnd5e-color-red) var(--vote-one-percentage));
+}
+
+.sqs-calling-card-container {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.499);
+  backdrop-filter: blur(5px);
+}
+.sqs-calling-card-container .sqs-calling-card {
+  position: absolute;
+  height: 20%;
+  aspect-ratio: 85/55;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 5px;
+}
+.sqs-calling-card-container .sqs-calling-card.large {
+  height: 35%;
+}
+.sqs-calling-card-container .sqs-calling-card.large .sqs-card-back {
+  padding: 3rem;
+  font-size: xx-large;
+}
+.sqs-calling-card-container .sqs-calling-card img {
+  border: none;
+  height: 100%;
+}
+.sqs-calling-card-container .sqs-calling-card .sqs-card-back {
+  padding: 2rem;
+  text-align: center;
+  font-family: "Amiri";
+  font-style: italic;
+  font-size: larger;
 }/*# sourceMappingURL=module.css.map */
