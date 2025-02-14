@@ -1,3 +1,4 @@
+import {Socket} from "./lib/socket.js";
 import { MODULE_ID } from "./main.js";
 
 export class CallingCard{
@@ -8,8 +9,15 @@ export class CallingCard{
         this.element.classList.add('sqs-calling-card-container');
         this.card = document.createElement('div');
         this.card.classList.add('sqs-calling-card');
-        if(this.options.large) this.card.classList.add("large");
+        this.showPlayers = document.createElement('div');
+        this.showPlayers.classList.add('sqs-calling-card-players');
+        this.closeButton = document.createElement('div');
+        this.closeButton.classList.add('sqs-calling-card-close');
+        this.closeButton.innerHTML = `<i class="fas fa-times"></i>`;
+        if (this.options.large) this.card.classList.add("large");
+        if(game.user.isGM) this.element.appendChild(this.showPlayers);
         this.element.appendChild(this.card);
+        this.element.appendChild(this.closeButton);
         if(options.render) this.render();
     }
 
@@ -23,18 +31,17 @@ export class CallingCard{
             easing: "ease-in-out"
         });
         await this.getCardHtml();
+        this.showPlayers.innerHTML = `<i class="fas fa-eye"></i>`;
         this.activate3DCard();
         this.element.addEventListener("contextmenu", (e) => {
             e.preventDefault();
-            this.element.animate([
-                {opacity: 1},
-                {opacity: 0}
-            ], {
-                duration: 300,
-                easing: "ease-in-out"
-            }).onfinish = () => {
-                this.element.remove();
-            }
+            this.close();
+        });
+        this.closeButton.addEventListener("click", () => {
+            this.close();
+        });
+        this.showPlayers.addEventListener("click", () => {
+            Socket.showCallingCard({message: this.text, options: this.options}, {users: game.users.filter(u => u.active && !u.isSelf).map(u => u.id)});
         });
     }
 
@@ -94,5 +101,17 @@ export class CallingCard{
             this.card.style.transform = "perspective(1000px) rotateY(0deg)";
             this.flipping = false;
         }, 300);
+    }
+
+    close() {
+        this.element.animate([
+            {opacity: 1},
+            {opacity: 0}
+        ], {
+            duration: 300,
+            easing: "ease-in-out"
+        }).onfinish = () => {
+            this.element.remove();
+        }
     }
 }

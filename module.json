@@ -81,6 +81,7 @@
   "url": "https://github.com/theripper93/side-quest-society-free",
   "manifest": "https://github.com/theripper93/side-quest-society-free/releases/latest/download/module.json",
   "download": "",
+  "socket": true,
   "relationships": {
     "requires": [
     ],
