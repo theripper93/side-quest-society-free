@@ -30,7 +30,6 @@ Hooks.on("init", () => {
     });
 
     document.addEventListener("click", (event) => {
-        console.log("Click")
         if (event.target.classList.contains("sqs-card-content-link")) {
             const data = event.target.dataset;
             const message = data.text;
