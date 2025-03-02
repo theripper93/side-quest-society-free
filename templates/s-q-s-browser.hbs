@@ -3,24 +3,42 @@
         {{#each quests as |quest|}}
         <li class="flexrow" data-uuid="{{quest.uuid}}">
             <img src="{{quest.thumbnail}}" alt="">
-            <div class="flexcol">
-                <div style="display: flex; flex-direction: row; align-content: center; justify-content: space-between; gap: 0.3rem;">
+            <div class="flexcol" style="min-height: 200px;">
+                <div
+                    style="display: flex; flex-direction: row; align-content: center; justify-content: space-between; gap: 0.3rem;">
                     <h1 class="quest-name">{{quest.name}}</h1>
-                    <button id="import"><i class="fa-solid fa-download"></i> {{localize "side-quest-society-free.s-q-s-browser.import"}}</button>
+                    <button id="import"><i class="fa-solid fa-download"></i> {{localize
+                        "side-quest-society-free.s-q-s-browser.import"}}</button>
                 </div>
+                {{#if quest.levels.apl}}
+                <h6 >Average Party Level: {{quest.levels.apl}}</h6>
+                {{/if}}
                 <div class="hint">{{{quest.description}}}</div>
                 <div class="flexrow">
-                    <span>{{localize "side-quest-society-free.s-q-s-browser.level"}}
-                        {{quest.flags.side-quest-society-free.metadata.level.min}} -
-                        {{quest.flags.side-quest-society-free.metadata.level.max}}</span>
-
-                    <div class="quest-votes" style="--vote-one-percentage: {{quest.votes1prc}}%" data-tooltip="{{quest.votes1}} / {{quest.votes2}}"></div>
+                    {{#unless quest.noVoting}}
+                    <div class="quest-votes" style="--vote-one-percentage: {{quest.votes1prc}}%">
+                        <div class="vote-bar-one">
+                        <span>{{quest.endingOne}}</span>
+                        <span>{{quest.votes1prc}}%</span>
+                        </div>
+                        <div class="vote-bar-two">
+                            <span>{{quest.votes2prc}}%</span>
+                        <span>{{quest.endingTwo}}</span>
+                        </div>
+                        </div>
+                    {{/unless}}
                     {{#unless quest.canVote}}
-                    <span style="font-size: x-large;text-align: center;">{{localize "side-quest-society-free.s-q-s-browser.closed"}}</span>
+                    {{#unless quest.noVoting}}
+                    <span style="font-size: x-large;text-align: center;">{{quest.winningEnding}}</span>
+                    {{/unless}}
                     {{/unless}}
                     <div class="flexrow {{#unless quest.canVote}}hidden{{/unless}}">
-                        <button  {{#if quest.voted1}}disabled{{/if}} id="vote-one"><i class="fa-solid fa-check-to-slot"></i> {{localize "side-quest-society-free.s-q-s-browser.voteOne"}}</button>
-                        <button {{#if quest.voted2}}disabled{{/if}} id="vote-two"><i class="fa-solid fa-check-to-slot"></i> {{localize "side-quest-society-free.s-q-s-browser.voteTwo"}}</button>
+                        <button {{#if quest.voted1}}disabled{{/if}} id="vote-one" data-tooltip="{{quest.endingOne}}"><i
+                                class="fa-solid fa-check-to-slot"></i> {{localize
+                            "side-quest-society-free.s-q-s-browser.voteOne"}}</button>
+                        <button {{#if quest.voted2}}disabled{{/if}} id="vote-two" data-tooltip="{{quest.endingTwo}}"><i
+                                class="fa-solid fa-check-to-slot"></i> {{localize
+                            "side-quest-society-free.s-q-s-browser.voteTwo"}}</button>
                     </div>
                 </div>
 

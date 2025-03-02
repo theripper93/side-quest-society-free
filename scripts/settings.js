@@ -1,3 +1,4 @@
+import {SQSBrowser} from "./app/SQSBrowser.js";
 import { MODULE_ID } from "./main.js";
 
 const SETTING_CACHE = {};
@@ -9,7 +10,7 @@ export function registerSettings() {
             name: "Developer Mode",
             hint: "Enable developer mode",
             scope: "world",
-            config: true,
+            config: false,
             default: false,
             type: Boolean,
             requiresReload: true,
@@ -20,9 +21,23 @@ export function registerSettings() {
             default: {},
             type: Object,
         },
+        firstTime: {
+            scope: "world",
+            config: false,
+            default: false,
+            type: Boolean,
+        }
     };
 
     registerSettingsArray(settings);
+
+    game.settings.registerMenu(MODULE_ID, "sqsBrowser", {
+        name: `${MODULE_ID}.${SQSBrowser.APP_ID}.title`,
+        label: "Browse Adventures",
+        icon: "fas fa-compass",
+        type: SQSBrowser,
+        restricted: true,
+    });
 }
 
 export function getSetting(key) {

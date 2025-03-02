@@ -2,7 +2,8 @@
 
 .s-q-s-browser {
 
-    .window-content, .standard-form {
+    .window-content,
+    .standard-form {
         height: 100%;
     }
 
@@ -12,11 +13,26 @@
         padding: 0.3rem;
     }
 
+    .level-range {
+        flex: 0;
+        min-width: fit-content;
+        padding: 0 0.3rem;
+    }
+
+    h1,h6{
+        margin: 0;
+    }
+    h6{
+        font-size: var(--font-size-20);
+    }
+
     button {
         width: max-content;
+
         &#vote-one {
             border-color: var(--dnd5e-color-blue);
         }
+
         &#vote-two {
             border-color: var(--dnd5e-color-red);
         }
@@ -27,6 +43,7 @@
         max-height: 200px;
         width: 400px;
         max-width: 400px;
+        object-fit: cover;
     }
 
     .quest-votes {
@@ -37,17 +54,40 @@
         height: 20px;
 
         border-radius: 5px;
-        box-shadow: 0 0 4px 1px;
+        border: 1px solid var(--dnd5e-color-gold);
 
-        background: linear-gradient(
-            to right,
-            var(--dnd5e-color-blue) var(--vote-one-percentage),
-            var(--dnd5e-color-red) var(--vote-one-percentage)
-          );
+        background: linear-gradient(to right,
+                var(--dnd5e-color-blue) var(--vote-one-percentage),
+                var(--dnd5e-color-red) var(--vote-one-percentage));
+
+        display: flex;
+        justify-content: space-between;
+        padding: 0 0.3rem;
+        align-items: center;
+
+        .vote-bar-one{
+            width: var(--vote-one-percentage);
+        }
+
+        .vote-bar-two{
+            width: var(--vote-two-percentage);
+        }
+
+        .vote-bar-one, .vote-bar-two{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        span{
+            color: var(--dnd5e-color-gold);
+            text-shadow: 0 0 3px black, 0 0 3px black, 0 0 3px black;
+            filter: brightness(1.5);
+        }
     }
 }
 
-.sqs-calling-card-container{
+.sqs-calling-card-container {
     position: absolute;
     width: 100vw;
     height: 100vh;
@@ -60,7 +100,8 @@
     background: rgba(0, 0, 0, 0.499);
     backdrop-filter: blur(5px);
 
-    .sqs-calling-card-players, .sqs-calling-card-close{
+    .sqs-calling-card-players,
+    .sqs-calling-card-close {
         position: absolute;
         font-size: 5rem;
         top: 5%;
@@ -68,19 +109,20 @@
         text-shadow: 0 0 0px white;
         transition: all 0.3s ease;
         opacity: 0.5;
-        &:hover{
+
+        &:hover {
             cursor: pointer;
             opacity: 1;
             text-shadow: 0 0 10px white;
         }
     }
 
-    .sqs-calling-card-close{
+    .sqs-calling-card-close {
         top: unset;
         bottom: 5%;
     }
 
-    .sqs-calling-card{
+    .sqs-calling-card {
         position: absolute;
         height: 20%;
         aspect-ratio: 85/55;
@@ -91,20 +133,21 @@
         padding: 1rem;
         border-radius: 5px;
 
-        &.large{
+        &.large {
             height: 35%;
-            .sqs-card-back{
+
+            .sqs-card-back {
                 padding: 3rem;
                 font-size: xx-large;
             }
         }
 
-        img{
+        img {
             border: none;
             height: 100%;
         }
 
-        .sqs-card-back{
+        .sqs-card-back {
             padding: 2rem;
             text-align: center;
             font-family: 'Amiri';

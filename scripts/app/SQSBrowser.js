@@ -1,6 +1,7 @@
 import { MODULE_ID } from "../main.js";
 import { HandlebarsApplication, mergeClone } from "../lib/utils.js";
 import {getSetting, setSetting} from "../settings.js";
+import {FormBuilder} from "../lib/formBuilder.js";
 
 let questServerData = null;
 
@@ -34,6 +35,18 @@ export class SQSBrowser extends HandlebarsApplication {
         };
     }
 
+    static async replaceTokenImage(tokenName) {
+        if(!tokenName && !_token) return ui.notifications.error("No token selected");
+        tokenName ??= _token.document.name;
+        const tokens = canvas.tokens.placeables.filter(token => token.document.name === tokenName).map(token => token.document);
+        if (tokens.length === 0) return ui.notifications.error("No token found with that name");
+        const data = await new FormBuilder().title("Replace token image").file({name: "image", label: "Image", type: "imagevideo", value: tokens[0].texture.src}).render();
+        if (!data) return;
+        tokens.forEach(token => {
+            token.update({"texture.src": data.image});
+        });
+    }
+
     async _prepareContext(options) {
         if (!questServerData) {
             questServerData = await this.#getQuestServerData();
@@ -42,8 +55,10 @@ export class SQSBrowser extends HandlebarsApplication {
         const freeQuests = await game.packs.get("side-quest-society-free.sqs-free-adventures").getDocuments();
         const premiumQuests = await game.packs.get("side-quest-society-premium.sqs-premium-adventures").getDocuments();
         const currentVotes = getSetting("votes");
-        data.quests = freeQuests.concat(premiumQuests).sort((a, b) => a.name.localeCompare(b.name));
+        data.quests = freeQuests.concat(premiumQuests);
         data.quests.forEach(quest => {
+            const metadata = (quest.flags["side-quest-society-free"] ?? quest.flags["side-quest-society-premium"] ?? {}).metadata ?? {level: {min: 0, max: 0}};
+            const levels = {min: metadata.level.min, max: metadata.level.max, apl: Math.round((metadata.level.min + metadata.level.max) / 2)};
             const questId = quest.name.slugify({strict: true});
             const serverData = questServerData[questId] ?? {};
             const votes1 = serverData.one ?? 0;
@@ -59,7 +74,13 @@ export class SQSBrowser extends HandlebarsApplication {
             quest.voted1 = voted1;
             quest.voted2 = voted2;
             quest.canVote = !serverData.closed;
+            quest.endingOne = metadata.endingOne
+            quest.endingTwo = metadata.endingTwo
+            quest.winningEnding = votes1 > votes2 ? quest.endingOne : quest.endingTwo;
+            quest.levels = levels;
         });
+        data.quests[0].noVoting = true;
+        data.quests[0].canVote = false;
         return { ...data };
     }
 

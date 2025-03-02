@@ -7,7 +7,9 @@
             "voteOne": "Vote One",
             "voteTwo": "Vote Two",
             "import": "Import",
-            "closed": "Voting Closed"
+            "closed": "Voting Closed",
+            "endingOne": "Ending One",
+            "endingTwo": "Ending Two"
         },
         "flags": {}
     }

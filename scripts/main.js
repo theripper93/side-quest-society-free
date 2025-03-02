@@ -1,14 +1,16 @@
 import { SQSBrowser } from "./app/SQSBrowser.js";
 import { CallingCard } from "./callingCard.js";
 import { initConfig } from "./config.js";
-import { registerSettings } from "./settings.js";
+import { getSetting, registerSettings, setSetting } from "./settings.js";
 import { Socket } from "./lib/socket.js";
+import { showWelcome } from "./lib/welcome.js";
 
 export const MODULE_ID = "side-quest-society-free";
 
 Hooks.on("init", () => {
     registerSettings();
     initConfig();
+    ui.SQSBrowser = SQSBrowser;
     Socket.register("showCallingCard", async (data) => {
         new CallingCard(data.message, data.options);
     });
@@ -43,7 +45,9 @@ Hooks.on("init", () => {
 });
 
 Hooks.on("ready", () => {
-    //new SQSBrowser().render(true);
-    //new CallingCard("A hidden path awaits those who seek adventure beyond fate. Aid is needed where kings cannot tread. If you dare, meet at The Gilded Lantern by midnight.")
-    window.CallingCard = CallingCard;
+    showWelcome(`<p>The side quest society (SQS) is a collection of adventures that can be played stand alone or by using the SQS headquarters. You can open the SQS Adventure Browser any time from the module settings!</p>
+            <p>Once you have completed an adventure, use the SQS Adventure Browser to vote which ending your group has chosen. This will help shape future adventures!</p>`, () => {
+        ui.notifications.info("You can open the SQS Adventure Browser any time from the module settings!", {permanent: true});
+        new SQSBrowser().render(true)
+    });
 });
