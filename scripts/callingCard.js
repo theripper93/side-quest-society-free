@@ -41,6 +41,7 @@ export class CallingCard{
             this.close();
         });
         this.showPlayers.addEventListener("click", () => {
+            ui.notifications.info("Calling Card Shown to Players");
             Socket.showCallingCard({message: this.text, options: this.options}, {users: game.users.filter(u => u.active && !u.isSelf).map(u => u.id)});
         });
     }
