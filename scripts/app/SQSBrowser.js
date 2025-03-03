@@ -53,7 +53,7 @@ export class SQSBrowser extends HandlebarsApplication {
         }
         const data = {};
         const freeQuests = await game.packs.get("side-quest-society-free.sqs-free-adventures").getDocuments();
-        const premiumQuests = await game.packs.get("side-quest-society-premium.sqs-premium-adventures").getDocuments();
+        const premiumQuests = await game.packs.get("side-quest-society-premium.sqs-premium-adventures")?.getDocuments() ?? [];
         const currentVotes = getSetting("votes");
         data.quests = freeQuests.concat(premiumQuests);
         data.quests.forEach(quest => {
