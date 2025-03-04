@@ -35,16 +35,38 @@ export class SQSBrowser extends HandlebarsApplication {
         };
     }
 
-    static async replaceTokenImage(tokenName) {
-        if(!tokenName && !_token) return ui.notifications.error("No token selected");
-        tokenName ??= _token.document.name;
-        const tokens = canvas.tokens.placeables.filter(token => token.document.name === tokenName).map(token => token.document);
-        if (tokens.length === 0) return ui.notifications.error("No token found with that name");
-        const data = await new FormBuilder().title("Replace token image").file({name: "image", label: "Image", type: "imagevideo", value: tokens[0].texture.src}).render();
-        if (!data) return;
-        tokens.forEach(token => {
-            token.update({"texture.src": data.image});
+    static async replaceTokenImage(options = {}) {
+
+        const sqsCoin = "modules/side-quest-society-free/assets/images/journals/SQS_Token_Coin.webp";
+
+        const scene = options.scene ?? canvas.scene;
+
+        const force = options.force ?? false;
+
+        const allActorsArray = scene.tokens.filter(token => token.actor && !token.actor.hasPlayerOwner && (token.texture.src === sqsCoin || force)).map(token => game.actors.get(token.actorId));
+
+        const allActors = Array.from(new Set(allActorsArray));
+
+        const formBuilder = new FormBuilder().title("Replace token image");
+        allActors.forEach(actor => {
+            formBuilder.file({name: actor.id, label: actor.name, type: "imagevideo", value: ""});
         });
+
+        const data = await formBuilder.render();
+        if (!data) return;
+        const updatedActors = [];
+        for (const actor of allActors) {
+            if (!data[actor.id]) continue;
+            await actor.update({"img": data[actor.id], "prototypeToken.texture.src": data[actor.id], "prototypeToken.texture.tint": "#ffffff"});
+            updatedActors.push(actor);
+        }
+        const tokenUpdates = [];
+        for (const token of scene.tokens) {
+            const tokenActor = game.actors.get(token.actorId);
+            if (!tokenActor || !updatedActors.includes(tokenActor)) continue;
+            tokenUpdates.push({...(await tokenActor.getTokenDocument()).toObject(), x: token.x, y: token.y, _id : token.id});
+        }
+        await scene.updateEmbeddedDocuments("Token", tokenUpdates);
     }
 
     async _prepareContext(options) {
