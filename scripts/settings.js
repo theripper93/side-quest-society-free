@@ -26,6 +26,12 @@ export function registerSettings() {
             config: false,
             default: false,
             type: Boolean,
+        },
+        adventureCount: {
+            scope: "world",
+            config: false,
+            default: 0,
+            type: Number,
         }
     };
 
