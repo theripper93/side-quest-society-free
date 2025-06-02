@@ -9,6 +9,7 @@
 }
 .s-q-s-browser .level-range {
   flex: 0;
+  min-width: -moz-fit-content;
   min-width: fit-content;
   padding: 0 0.3rem;
 }
@@ -19,6 +20,7 @@
   font-size: var(--font-size-20);
 }
 .s-q-s-browser button {
+  width: -moz-max-content;
   width: max-content;
 }
 .s-q-s-browser button#vote-one {
@@ -32,7 +34,8 @@
   max-height: 200px;
   width: 400px;
   max-width: 400px;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 .s-q-s-browser .quest-votes {
   --vote-one-percentage: 0%;
@@ -74,7 +77,8 @@
   justify-content: center;
   align-items: center;
   background: rgba(0, 0, 0, 0.499);
-  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
 }
 .sqs-calling-card-container .sqs-calling-card-players,
 .sqs-calling-card-container .sqs-calling-card-close {
@@ -101,6 +105,7 @@
   height: 20%;
   aspect-ratio: 85/55;
   background-color: white;
+  color: black;
   display: flex;
   justify-content: center;
   align-items: center;
