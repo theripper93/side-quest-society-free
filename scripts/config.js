@@ -5,13 +5,13 @@ import {FormBuilder} from "./lib/formBuilder.js";
 export function initConfig() {
 
     if (getSetting("devMode")) {
-        Hooks.on("getCompendiumEntryContext", (compendium, folderContext) => {
+        Hooks.on("getAdventureContextOptions", (compendium, folderContext) => {
             if (!compendium.collection.collection.includes("side-quest-society")) return;
             folderContext.push({
                 name: "Edit SQS Metadata",
                 icon: '<i class="fas fa-scroll"></i>',
                 condition: true,
-                callback: (li) => editMetadata(compendium.collection, li[0].dataset.documentId),
+                callback: (li) => editMetadata(compendium.collection, li.dataset.entryId),
             });
         });
     }

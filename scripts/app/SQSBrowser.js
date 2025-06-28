@@ -148,6 +148,13 @@ export class SQSBrowser extends HandlebarsApplication {
       quest.winningEnding = votes1 > votes2 ? quest.endingOne : quest.endingTwo;
       quest.levels = levels;
     });
+    data.quests = data.quests.sort((a, b) => {
+      const aplA = a.levels.apl;
+      const aplB = b.levels.apl;
+      if (aplA < aplB) return -1;
+      if (aplA > aplB) return 1;
+      return 0;
+    });
     data.quests[0].noVoting = true;
     data.quests[0].canVote = false;
     return { ...data };
