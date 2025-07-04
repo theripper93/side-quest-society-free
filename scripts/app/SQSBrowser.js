@@ -50,7 +50,7 @@ export class SQSBrowser extends HandlebarsApplication {
 
   static async replaceTokenImage(options = {}) {
     const sqsCoin =
-      "modules/side-quest-society-free/assets/images/journals/SQS_Token_Coin.webp";
+      "SQS_Token_Coin";
 
     const scene = options.scene ?? canvas.scene;
 
@@ -61,7 +61,7 @@ export class SQSBrowser extends HandlebarsApplication {
         (token) =>
           token.actor &&
           !token.actor.hasPlayerOwner &&
-          (token.texture.src === sqsCoin || force)
+          (token.texture.src.includes(sqsCoin) || force)
       )
       .map((token) => game.actors.get(token.actorId));
 
@@ -94,9 +94,7 @@ export class SQSBrowser extends HandlebarsApplication {
       const tokenActor = game.actors.get(token.actorId);
       if (!tokenActor || !updatedActors.includes(tokenActor)) continue;
       tokenUpdates.push({
-        ...(await tokenActor.getTokenDocument()).toObject(),
-        x: token.x,
-        y: token.y,
+        "texture.src": data[tokenActor.id],
         _id: token.id,
       });
     }
